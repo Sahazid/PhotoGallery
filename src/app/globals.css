@@ -163,6 +163,13 @@
   background-color: var(--gallery-surface);
 }
 
+.gallery-glass-menu {
+  background-color: color-mix(in srgb, var(--gallery-bg) 82%, transparent);
+  border-color: color-mix(in srgb, var(--gallery-text) 10%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(1.35);
+  backdrop-filter: blur(24px) saturate(1.35);
+}
+
 .gallery-text {
   color: var(--gallery-text);
 }

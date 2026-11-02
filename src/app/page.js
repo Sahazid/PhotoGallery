@@ -8,8 +8,10 @@ import {
   ArrowRight,
   ArrowUpRight,
   Heart,
+  Menu,
   Search,
   SlidersHorizontal,
+  X,
 } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Reveal, TiltCard } from "@/Components/ui/motion-effects";
@@ -95,6 +97,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [savedPhotos, setSavedPhotos] = useState([]);
   const [showAll, setShowAll] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const filteredPhotos = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -124,7 +127,7 @@ export default function Home() {
 
   return (
     <main className="gallery-bg gallery-text min-h-screen transition-colors duration-300">
-      <Reveal as="header" className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
+      <Reveal as="header" className="relative z-30 mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
         <a
           href="#"
           className="flex items-center gap-2.5"
@@ -154,11 +157,58 @@ export default function Home() {
           <ThemeToggle />
           <a
             href="#gallery"
-            className="gallery-button rounded-full px-5 py-2.5 text-[12px] font-medium transition"
+            className="gallery-button hidden rounded-full px-5 py-2.5 text-[12px] font-medium transition md:inline-flex"
           >
             Explore the gallery
           </a>
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
+            className="gallery-theme-control grid size-10 place-items-center rounded-full border transition md:hidden"
+          >
+            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
+
+        {isMobileMenuOpen && (
+          <nav
+            id="mobile-navigation"
+            aria-label="Mobile navigation"
+            className="gallery-glass-menu absolute left-5 right-5 top-[calc(100%-0.5rem)] rounded-2xl border p-3 shadow-xl sm:left-8 sm:right-8 md:hidden"
+          >
+            <a
+              className="gallery-text block rounded-xl px-4 py-3 text-sm transition hover:bg-black/5 dark:hover:bg-white/5"
+              href="#gallery"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Discover
+            </a>
+            <Link
+              className="gallery-text block rounded-xl px-4 py-3 text-sm transition hover:bg-black/5 dark:hover:bg-white/5"
+              href="/about"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About
+            </Link>
+            <Link
+              className="gallery-text block rounded-xl px-4 py-3 text-sm transition hover:bg-black/5 dark:hover:bg-white/5"
+              href="/PhotoGraph"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              For photographers
+            </Link>
+            <a
+              href="#gallery"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="gallery-button mt-2 block rounded-xl px-4 py-3 text-center text-sm font-medium transition"
+            >
+              Explore the gallery
+            </a>
+          </nav>
+        )}
       </Reveal>
 
       <Reveal as="section" className="mx-auto grid max-w-[1440px] items-center gap-9 px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-14 lg:grid-cols-[0.86fr_1.14fr] lg:gap-16 lg:px-14 lg:pb-20 lg:pt-16">
