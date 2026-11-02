@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getPhotoById, photos } from "@/lib/photos";
+import ThemeToggle from "@/Components/ui/theme-toggle";
 
 export function generateStaticParams() {
   return photos.map((photo) => ({ id: String(photo.id) }));
@@ -46,13 +47,16 @@ export default async function PhotoPage({ params }) {
           </span>
         </Link>
 
-        <Link
-          href="/#gallery"
-          className="gallery-muted inline-flex items-center gap-2 text-[12px] transition hover:opacity-70"
-        >
-          <ArrowLeft size={15} />
-          Back to the collection
-        </Link>
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
+          <Link
+            href="/#gallery"
+            className="gallery-muted inline-flex items-center gap-2 text-[12px] transition hover:opacity-70"
+          >
+            <ArrowLeft size={15} />
+            Back to the collection
+          </Link>
+        </div>
       </header>
 
       <article className="mx-auto max-w-[1440px] px-5 pb-16 pt-7 sm:px-8 sm:pb-24 lg:px-14 lg:pb-28">

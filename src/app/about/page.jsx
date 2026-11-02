@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
+import ThemeToggle from "@/Components/ui/theme-toggle";
 
 export const metadata = {
   title: "About — still.",
@@ -60,12 +61,15 @@ export default function AboutPage() {
           </Link>
         </nav>
 
-        <Link
-          href="/#gallery"
-          className="gallery-button rounded-full px-5 py-2.5 text-[12px] font-medium transition"
-        >
-          Explore the gallery
-        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href="/#gallery"
+            className="gallery-button rounded-full px-5 py-2.5 text-[12px] font-medium transition"
+          >
+            Explore the gallery
+          </Link>
+        </div>
       </header>
 
       <section className="mx-auto grid max-w-[1440px] items-center gap-10 px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-14 lg:pb-28 lg:pt-20">

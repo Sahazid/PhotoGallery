@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,12 +8,11 @@ import {
   ArrowRight,
   ArrowUpRight,
   Heart,
-  Moon,
   Search,
   SlidersHorizontal,
-  Sun,
 } from "lucide-react";
 import DiagonalCarousel from "@/Components/ui/diagonal-carousel";
+import ThemeToggle from "@/Components/ui/theme-toggle";
 import { categories, photos } from "@/lib/photos";
 
 const featuredPhoto = {
@@ -89,11 +88,6 @@ export default function Home() {
   const [savedPhotos, setSavedPhotos] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
-  useEffect(() => {
-    const savedTheme = window.localStorage.getItem("still-theme");
-    document.documentElement.classList.toggle("dark", savedTheme === "dark");
-  }, []);
-
   const filteredPhotos = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
 
@@ -118,14 +112,6 @@ export default function Home() {
         ? current.filter((id) => id !== photoId)
         : [...current, photoId],
     );
-  }
-
-  function toggleTheme() {
-    const nextTheme = document.documentElement.classList.contains("dark")
-      ? "light"
-      : "dark";
-    document.documentElement.classList.toggle("dark", nextTheme === "dark");
-    window.localStorage.setItem("still-theme", nextTheme);
   }
 
   return (
@@ -157,16 +143,7 @@ export default function Home() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label="Toggle light and dark mode"
-            title="Toggle light and dark mode"
-            className="cursor-pointer gallery-theme-control grid size-10 place-items-center rounded-full border transition"
-          >
-            <Moon className="dark:hidden" size={17} />
-            <Sun className="hidden dark:block" size={17} />
-          </button>
+          <ThemeToggle />
           <a
             href="#gallery"
             className="gallery-button rounded-full px-5 py-2.5 text-[12px] font-medium transition"
