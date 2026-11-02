@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getPhotoById, photos } from "@/lib/photos";
+import { Reveal, TiltCard } from "@/Components/ui/motion-effects";
 import ThemeToggle from "@/Components/ui/theme-toggle";
 
 export function generateStaticParams() {
@@ -33,7 +34,7 @@ export default async function PhotoPage({ params }) {
 
   return (
     <main className="gallery-bg gallery-text min-h-screen">
-      <header className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
+      <Reveal as="header" className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
         <Link
           href="/"
           className="flex items-center gap-2.5"
@@ -57,9 +58,9 @@ export default async function PhotoPage({ params }) {
             Back to the collection
           </Link>
         </div>
-      </header>
+      </Reveal>
 
-      <article className="mx-auto max-w-[1440px] px-5 pb-16 pt-7 sm:px-8 sm:pb-24 lg:px-14 lg:pb-28">
+      <Reveal as="article" className="mx-auto max-w-[1440px] px-5 pb-16 pt-7 sm:px-8 sm:pb-24 lg:px-14 lg:pb-28">
         <p className="gallery-subtle mb-5 text-[10px] font-semibold uppercase tracking-[0.19em]">
           The collection <span className="px-1.5">/</span>{" "}
           {String(photo.id).padStart(2, "0")}
@@ -88,7 +89,7 @@ export default async function PhotoPage({ params }) {
           </div>
         </div>
 
-        <figure className="gallery-image-placeholder relative mt-9 aspect-[4/3] overflow-hidden rounded-[24px] sm:mt-12 lg:aspect-[16/9]">
+        <TiltCard as="figure" className="gallery-image-placeholder relative mt-9 aspect-[4/3] overflow-hidden rounded-[24px] sm:mt-12 lg:aspect-[16/9]">
           <Image
             src={photo.image}
             alt={`${photo.title}, photographed by ${photo.creator} in ${photo.location}`}
@@ -97,7 +98,7 @@ export default async function PhotoPage({ params }) {
             sizes="(max-width: 1024px) 100vw, 90vw"
             className="object-cover"
           />
-        </figure>
+        </TiltCard>
 
         <div className="gallery-border mt-8 grid gap-8 border-t pt-7 sm:grid-cols-[1fr_auto] sm:items-start">
           <div className="max-w-[680px]">
@@ -115,9 +116,9 @@ export default async function PhotoPage({ params }) {
             Discover more photographs <ArrowUpRight size={14} />
           </Link>
         </div>
-      </article>
+      </Reveal>
 
-      <footer className="gallery-surface gallery-border border-t px-5 py-8 sm:px-8 lg:px-14">
+      <Reveal as="footer" className="gallery-surface gallery-border border-t px-5 py-8 sm:px-8 lg:px-14">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="gallery-muted text-[13px]">
             Made for looking a little longer.
@@ -129,7 +130,7 @@ export default async function PhotoPage({ params }) {
             Back to still.
           </Link>
         </div>
-      </footer>
+      </Reveal>
     </main>
   );
 }

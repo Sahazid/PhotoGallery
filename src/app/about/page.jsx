@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Reveal, TiltCard } from "@/Components/ui/motion-effects";
 import ThemeToggle from "@/Components/ui/theme-toggle";
 
 export const metadata = {
@@ -32,7 +33,7 @@ const principles = [
 export default function AboutPage() {
   return (
     <main className="gallery-bg gallery-text min-h-screen">
-      <header className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
+      <Reveal as="header" className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
         <Link
           href="/"
           className="flex items-center gap-2.5"
@@ -70,9 +71,9 @@ export default function AboutPage() {
             Explore the gallery
           </Link>
         </div>
-      </header>
+      </Reveal>
 
-      <section className="mx-auto grid max-w-[1440px] items-center gap-10 px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-14 lg:pb-28 lg:pt-20">
+      <Reveal as="section" className="mx-auto grid max-w-[1440px] items-center gap-10 px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-14 lg:pb-28 lg:pt-20">
         <div className="max-w-[550px]">
           <p className="gallery-accent mb-5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.19em]">
             <span className="gallery-accent-line h-px w-6" />A note on still.
@@ -99,7 +100,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div
+        <TiltCard
           role="img"
           aria-label="A quiet mountain landscape beneath a hazy open sky"
           className="gallery-image-placeholder relative min-h-[340px] overflow-hidden rounded-[24px] bg-cover bg-center sm:min-h-[470px] lg:min-h-[550px]"
@@ -111,10 +112,11 @@ export default function AboutPage() {
           <p className="absolute bottom-6 left-6 font-serif text-[28px] italic text-white sm:bottom-8 sm:left-8 sm:text-[36px]">
             There is more to notice.
           </p>
-        </div>
-      </section>
+        </TiltCard>
+      </Reveal>
 
-      <section
+      <Reveal
+        as="section"
         id="our-belief"
         className="gallery-surface gallery-border border-y px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28"
       >
@@ -143,9 +145,9 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28">
+      <Reveal as="section" className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28">
         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <p className="gallery-subtle mb-3 text-[10px] font-semibold uppercase tracking-[0.19em]">
@@ -162,8 +164,10 @@ export default function AboutPage() {
 
         <div className="gallery-border grid border-t sm:grid-cols-3">
           {principles.map((principle) => (
-            <article
+            <Reveal
+              as="article"
               key={principle.number}
+              delay={Number(principle.number) * 0.06}
               className="gallery-border border-b py-7 sm:border-b-0 sm:border-r sm:px-6 sm:py-8 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0 lg:py-10 lg:first:pr-10 lg:last:pl-10"
             >
               <p className="gallery-accent text-[11px] font-medium">
@@ -175,12 +179,12 @@ export default function AboutPage() {
               <p className="gallery-muted mt-3 text-[13px] leading-7">
                 {principle.description}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Reveal>
 
-      <section className="gallery-surface px-5 py-14 sm:px-8 sm:py-16 lg:px-14">
+      <Reveal as="section" className="gallery-surface px-5 py-14 sm:px-8 sm:py-16 lg:px-14">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-7 sm:flex-row sm:items-center">
           <div>
             <p className="gallery-subtle mb-3 text-[10px] font-semibold uppercase tracking-[0.19em]">
@@ -198,9 +202,9 @@ export default function AboutPage() {
             <ArrowRight size={15} />
           </Link>
         </div>
-      </section>
+      </Reveal>
 
-      <footer className="gallery-border border-t px-5 py-8 sm:px-8 lg:px-14">
+      <Reveal as="footer" className="gallery-border border-t px-5 py-8 sm:px-8 lg:px-14">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="gallery-muted text-[13px]">
             Made for looking a little longer.
@@ -212,7 +216,7 @@ export default function AboutPage() {
             Back to still. <ArrowUpRight size={13} />
           </Link>
         </div>
-      </footer>
+      </Reveal>
     </main>
   );
 }

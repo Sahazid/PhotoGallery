@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# still.
 
-## Getting Started
+still. is a curated photo journal for images that make you pause, look closer,
+and feel a little more. Browse a collection of photographs, filter by category,
+search by image or photographer details, and open individual photo pages.
 
-First, run the development server:
+## Features
+
+- Search photographs by title, photographer, category, location, or description.
+- Filter the collection by category.
+- Save and unsave photographs during the current visit.
+- View photographs and their details on dedicated pages.
+- Switch between light and dark themes; the selected theme is saved in browser
+  storage.
+- Responsive layouts for different screen sizes.
+
+## Getting started
+
+Install the dependencies and start the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Photographs are served from Unsplash, so the browser needs an internet
+connection to load them.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available scripts
 
-## Learn More
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Next.js development server. |
+| `npm run build` | Create a production build. |
+| `npm run start` | Start the production server (run `npm run build` first). |
+| `npm run lint` | Run ESLint. |
 
-To learn more about Next.js, take a look at the following resources:
+## Pages
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| URL | Description |
+| --- | --- |
+| `/` | Featured photograph and searchable, filterable collection. |
+| `/photos/[id]` | Details for an individual photograph. |
+| `/about` | About the photo journal. |
+| `/PhotoGraph` | Information for photographers. |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
+```text
+src/
+  app/
+    about/          About page
+    photos/[id]/    Individual photo page
+    PhotoGraph/     Photographer information page
+    globals.css     Global styles and theme colors
+    layout.js       Root layout and site metadata
+    page.js         Home page and gallery
+  Components/ui/    Gallery UI components
+  lib/
+    photos.js       Photo collection and category data
+    utils.js        Shared utilities
+public/             Static assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The photo collection and category list are defined in `src/lib/photos.js`.
+Images use `images.unsplash.com`, which is allowed by the Next.js image
+configuration in `next.config.mjs`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Built with
+
+- Next.js and React
+- Tailwind CSS
+- Lucide icons
+- Framer Motion and React Three Fiber

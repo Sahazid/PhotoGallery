@@ -11,7 +11,8 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
-import DiagonalCarousel from "@/Components/ui/diagonal-carousel";
+import { motion, useReducedMotion } from "framer-motion";
+import { Reveal, TiltCard } from "@/Components/ui/motion-effects";
 import ThemeToggle from "@/Components/ui/theme-toggle";
 import { categories, photos } from "@/lib/photos";
 
@@ -23,6 +24,8 @@ const featuredPhoto = {
 };
 
 function PhotoCard({ photo, isSaved, onToggleSave }) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <article className="group min-w-0">
       <div
@@ -41,11 +44,15 @@ function PhotoCard({ photo, isSaved, onToggleSave }) {
             className="object-cover transition duration-700 ease-out group-hover:scale-[1.04]"
           />
         </Link>
-        <button
+        <motion.button
           type="button"
+          tabIndex={0}
           onClick={() => onToggleSave(photo.id)}
           aria-label={isSaved ? `Unsave ${photo.title}` : `Save ${photo.title}`}
           aria-pressed={isSaved}
+          whileHover={shouldReduceMotion ? undefined : { scale: 1.1 }}
+          whileTap={shouldReduceMotion ? undefined : { scale: 0.88 }}
+          transition={{ type: "spring", stiffness: 400, damping: 18 }}
           className={`absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-full backdrop-blur-md transition ${
             isSaved
               ? "bg-white text-rose-500"
@@ -53,7 +60,7 @@ function PhotoCard({ photo, isSaved, onToggleSave }) {
           }`}
         >
           <Heart size={17} fill={isSaved ? "currentColor" : "none"} />
-        </button>
+        </motion.button>
         <span className="pointer-events-none absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-medium tracking-wide text-[#35362f] backdrop-blur-md">
           {photo.category}
         </span>
@@ -83,6 +90,7 @@ function PhotoCard({ photo, isSaved, onToggleSave }) {
 }
 
 export default function Home() {
+  const shouldReduceMotion = useReducedMotion();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [savedPhotos, setSavedPhotos] = useState([]);
@@ -116,7 +124,7 @@ export default function Home() {
 
   return (
     <main className="gallery-bg gallery-text min-h-screen transition-colors duration-300">
-      <header className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
+      <Reveal as="header" className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
         <a
           href="#"
           className="flex items-center gap-2.5"
@@ -151,9 +159,9 @@ export default function Home() {
             Explore the gallery
           </a>
         </div>
-      </header>
+      </Reveal>
 
-      <section className="mx-auto grid max-w-[1440px] items-center gap-9 px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-14 lg:grid-cols-[0.86fr_1.14fr] lg:gap-16 lg:px-14 lg:pb-20 lg:pt-16">
+      <Reveal as="section" className="mx-auto grid max-w-[1440px] items-center gap-9 px-5 pb-12 pt-10 sm:px-8 sm:pb-16 sm:pt-14 lg:grid-cols-[0.86fr_1.14fr] lg:gap-16 lg:px-14 lg:pb-20 lg:pt-16">
         <div className="max-w-[530px]">
           <p className="gallery-accent mb-5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.19em]">
             <span className="gallery-accent-line h-px w-6" />A curated photo
@@ -181,7 +189,8 @@ export default function Home() {
           </div>
         </div>
 
-        <a
+        <TiltCard
+          as="a"
           href="#gallery"
           className="gallery-image-placeholder group relative block min-h-[310px] overflow-hidden rounded-[24px] sm:min-h-[420px] lg:min-h-[500px]"
           aria-label={`Featured photograph: ${featuredPhoto.title} by ${featuredPhoto.creator}`}
@@ -211,11 +220,13 @@ export default function Home() {
               <ArrowUpRight size={19} />
             </span>
           </span>
-        </a>
-      </section>
+        </TiltCard>
+      </Reveal>
 
-      <section
+      <Reveal
+        as="section"
         id="gallery"
+        delay={0.08}
         className="mx-auto max-w-[1440px] px-5 pb-20 sm:px-8 lg:px-14 lg:pb-28"
       >
         <div className="gallery-border border-t pt-8 sm:pt-10">
@@ -285,23 +296,19 @@ export default function Home() {
 
           {visiblePhotos.length > 0 ? (
             <div className="mt-7 grid grid-cols-1 gap-x-5 gap-y-9 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-11 lg:grid-cols-3 lg:gap-x-7">
-              {visiblePhotos.map((photo) => (
-                // <DiagonalCarousel
-                //   key={photo.id}
-                //   photo={photo}
-                //   defaultActiveIndex={2}
-                //   isSaved={savedPhotos.includes(photo.id)}
-                //   slideSize={250}
-                //   onToggleSave={toggleSavedPhoto}
-                //   className="h-[560px] bg-[#ececec] text-neutral-800 dark:bg-neutral-950 dark:text-neutral-100"
-                // />
-
-                <PhotoCard
+              {visiblePhotos.map((photo, index) => (
+                <Reveal
                   key={photo.id}
-                  photo={photo}
-                  isSaved={savedPhotos.includes(photo.id)}
-                  onToggleSave={toggleSavedPhoto}
-                />
+                  as="div"
+                  delay={(index % 3) * 0.07}
+                  className="h-full"
+                >
+                  <PhotoCard
+                    photo={photo}
+                    isSaved={savedPhotos.includes(photo.id)}
+                    onToggleSave={toggleSavedPhoto}
+                  />
+                </Reveal>
               ))}
             </div>
           ) : (
@@ -315,20 +322,27 @@ export default function Home() {
 
           {filteredPhotos.length > 8 && (
             <div className="mt-12 flex justify-center">
-              <button
+              <motion.button
                 type="button"
+                tabIndex={0}
                 onClick={() => setShowAll((current) => !current)}
+                whileHover={
+                  shouldReduceMotion ? undefined : { y: -2, scale: 1.025 }
+                }
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="gallery-more inline-flex items-center gap-2.5 rounded-full border px-6 py-3 text-[12px] font-medium transition"
               >
                 {showAll ? "Show a little less" : "More to discover"}
                 {showAll ? <ArrowRight size={15} /> : <ArrowDown size={15} />}
-              </button>
+              </motion.button>
             </div>
           )}
         </div>
-      </section>
+      </Reveal>
 
-      <footer
+      <Reveal
+        as="footer"
         id="about"
         className="gallery-surface gallery-border border-t px-5 py-10 sm:px-8 lg:px-14"
       >
@@ -340,7 +354,7 @@ export default function Home() {
             A collection of work by photographers around the world.
           </p>
         </div>
-      </footer>
+      </Reveal>
     </main>
   );
 }

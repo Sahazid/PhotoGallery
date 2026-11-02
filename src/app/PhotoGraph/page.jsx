@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Camera, Eye, Heart } from "lucide-react";
+import { Reveal } from "@/Components/ui/motion-effects";
 import ThemeToggle from "@/Components/ui/theme-toggle";
 
 export const metadata = {
@@ -35,7 +36,7 @@ const values = [
 export default function PhotographerPage() {
   return (
     <main className="gallery-bg gallery-text min-h-screen">
-      <header className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
+      <Reveal as="header" className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-8 lg:px-14">
         <Link
           href="/"
           className="flex items-center gap-2.5"
@@ -77,9 +78,9 @@ export default function PhotographerPage() {
             Explore the gallery
           </Link>
         </div>
-      </header>
+      </Reveal>
 
-      <section className="mx-auto max-w-[1440px] px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:px-14 lg:pb-28 lg:pt-24">
+      <Reveal as="section" className="mx-auto max-w-[1440px] px-5 pb-16 pt-12 sm:px-8 sm:pb-20 sm:pt-16 lg:px-14 lg:pb-28 lg:pt-24">
         <p className="gallery-accent mb-5 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.19em]">
           <span className="gallery-accent-line h-px w-6" />
           For the ones behind the lens
@@ -107,9 +108,9 @@ export default function PhotographerPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="gallery-surface gallery-border border-y px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28">
+      <Reveal as="section" className="gallery-surface gallery-border border-y px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28">
         <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <div>
             <p className="gallery-subtle mb-3 text-[10px] font-semibold uppercase tracking-[0.19em]">
@@ -133,9 +134,9 @@ export default function PhotographerPage() {
             </p>
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      <section className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28">
+      <Reveal as="section" className="mx-auto max-w-[1440px] px-5 py-16 sm:px-8 sm:py-20 lg:px-14 lg:py-28">
         <div className="mb-10">
           <p className="gallery-subtle mb-3 text-[10px] font-semibold uppercase tracking-[0.19em]">
             What guides the collection <span className="px-1.5">/</span> 02
@@ -147,8 +148,10 @@ export default function PhotographerPage() {
 
         <div className="gallery-border grid border-t sm:grid-cols-3">
           {values.map(({ number, icon: Icon, title, description }) => (
-            <article
+            <Reveal
+              as="article"
               key={number}
+              delay={Number(number) * 0.06}
               className="gallery-border border-b py-7 sm:border-b-0 sm:border-r sm:px-6 sm:py-8 sm:first:pl-0 sm:last:border-r-0 sm:last:pr-0 lg:py-10 lg:first:pr-10 lg:last:pl-10"
             >
               <div className="gallery-accent-soft grid size-10 place-items-center rounded-full">
@@ -163,12 +166,12 @@ export default function PhotographerPage() {
               <p className="gallery-muted mt-3 text-[13px] leading-7">
                 {description}
               </p>
-            </article>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Reveal>
 
-      <section className="gallery-surface px-5 py-14 sm:px-8 sm:py-16 lg:px-14">
+      <Reveal as="section" className="gallery-surface px-5 py-14 sm:px-8 sm:py-16 lg:px-14">
         <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-7 sm:flex-row sm:items-center">
           <div>
             <p className="gallery-subtle mb-3 text-[10px] font-semibold uppercase tracking-[0.19em]">
@@ -185,9 +188,9 @@ export default function PhotographerPage() {
             Explore the gallery <ArrowUpRight size={15} />
           </Link>
         </div>
-      </section>
+      </Reveal>
 
-      <footer className="gallery-border border-t px-5 py-8 sm:px-8 lg:px-14">
+      <Reveal as="footer" className="gallery-border border-t px-5 py-8 sm:px-8 lg:px-14">
         <div className="mx-auto flex max-w-[1440px] flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="gallery-muted text-[13px]">
             Made for looking a little longer.
@@ -199,7 +202,7 @@ export default function PhotographerPage() {
             Back to still.
           </Link>
         </div>
-      </footer>
+      </Reveal>
     </main>
   );
 }
